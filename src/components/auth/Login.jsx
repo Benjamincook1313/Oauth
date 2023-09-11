@@ -17,7 +17,6 @@ export default function login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hit handleSubmit");
     if(!user.email || !user.password) {
       alert("Please enter all fields to submit");
       return;

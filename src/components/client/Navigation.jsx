@@ -31,7 +31,7 @@ export default function Navigation() {
   const getUser = async () => {
     const res = await axios.get("/api/user")
     .catch(err => console.log(err));
-    setUserData(res.data);
+    res && setUserData(res.data);
   }
 
   useEffect(() => {

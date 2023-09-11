@@ -3,11 +3,11 @@ import { Sequelize } from "sequelize";
 export default async function connectToDB(dbURI){
   console.log(`Connecting to DB: ${dbURI}`);
 
-  const sequelize = new Sequelize({
+  const sequelize = new Sequelize(dbURI, {
     logging: console.log,
     define: {
       timestamps: false,
-      underscored: false
+      underscored: false,
     }
   });
 
