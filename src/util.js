@@ -4,11 +4,10 @@ export function checkPassword(pass, verify){
 
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   let errStr = '';
-
   if(pass !== verify) errorStr += "passwords don't match ";
   if(pass.includes(" ")) errStr += "No spaces allowed! ";
   if(pass.length < 8) errStr += "Min 8 characters";
-  if(specialChars.test(pass)) errStr += "Special character";
+  // if(specialChars.test(pass)) errStr += "Special character";
 
   return errStr? {error: errStr, status: false}: {status: true};
 }
