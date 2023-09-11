@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navigation from '../client/Navigation';
 
 export default function login() {
 
@@ -27,10 +28,9 @@ export default function login() {
     }
   };
 
-  console.log(user);
-
   return (
-    <div>
+    <>
+      <Navigation />
       <h1>Login</h1>
 
       <form>
@@ -60,6 +60,6 @@ export default function login() {
 
         <button onClick={(e) => handleSubmit(e)}>submit</button>
       </form>
-    </div>
+    </>
   )
 }

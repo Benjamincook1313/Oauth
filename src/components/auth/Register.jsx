@@ -2,6 +2,7 @@ import React, { useState,  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkPassword } from '../../util';
 import axios from "axios";
+import Navigation from '../client/Navigation';
 
 export default function Register() {
 
@@ -47,7 +48,8 @@ export default function Register() {
   }
   
   return (
-    <div>
+    <>
+      <Navigation />
       <h1>Register</h1>
       {loading? 
         <h3>Loading...</h3>:
@@ -108,6 +110,6 @@ export default function Register() {
           <button onClick={(e) => handleSubmit(e)}>submit</button>
         </form>
       }
-    </div>
+    </>
   )
 }

@@ -17,7 +17,7 @@ const PORT = 4545;
 const { register, user, login, logout } = authCtrl;
 
 // USER AUTHENTICATION
-app.get("/api/user/:id", user);
+app.get("/api/user", user);
 app.get("/api/logout", logout);
 app.post("/api/register", register);
 app.post("/api/login", login);
