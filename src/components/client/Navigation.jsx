@@ -31,7 +31,7 @@ export default function Navigation() {
   const getUser = async () => {
     const res = await axios.get("/api/user")
     .catch(err => console.log(err));
-    res && setUserData(res.data);
+    setUserData(res.data);
   }
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Navigation() {
   return (
     <Nav>
       {userData && <Link to={`/user/${userData.id}`} >
-        <Img src={userData.img} />
+        <Img src={userData.img} alt="profile"/>
       </Link>
       }
       <Link to="/" >Home</Link>

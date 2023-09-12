@@ -23,7 +23,7 @@ export default function Register() {
     setVerify('');
     setEmail('');
     setPassword('');
-    setLoading(false);
+    setLoading(() => false);
   };
 
   const handleSubmit = async (e) => {
@@ -39,8 +39,9 @@ export default function Register() {
       setLoading(() => true);
       const res = await axios.post("/api/register", {first, last, email, password})
       .catch(err => console.log(err) && setLoading(() => false));
-      console.log(res.data);
+      // console.log(res.data);
       alert(res.data.message);
+      reset();
       navigate(`/login`);
     }else{
       setLoading(() => false);

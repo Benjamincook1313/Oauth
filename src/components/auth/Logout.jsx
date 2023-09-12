@@ -9,7 +9,7 @@ export default function Logout() {
 
   const logout = async (opt) => {
     if(opt){
-      const { data } = await axios.get("/api/logout")
+      const { data } = await axios.delete("/api/logout")
       .catch(err => console.log(err));
       alert(data.message);
     }

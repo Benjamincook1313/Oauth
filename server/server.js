@@ -18,8 +18,8 @@ const { register, user, login, logout } = authCtrl;
 
 // USER AUTHENTICATION
 app.get("/api/user", user);
-app.get("/api/logout", logout);
 app.post("/api/register", register);
 app.post("/api/login", login);
+app.delete("/api/logout", logout);
 
 viteExpress.listen(app, PORT, () => console.log("Server listening on port " + PORT));

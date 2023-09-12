@@ -7,6 +7,7 @@ export default function login() {
 
   const [show, setShow] = useState(false);
   const [user, setUser] = useState({email: '', password: ''});
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,9 +22,13 @@ export default function login() {
       alert("Please enter all fields to submit");
       return;
     }else{
-      const { data } = await axios.post("/api/login", user)
+      setLoading(() => true);
+      // console.log("hit");
+      const res = await axios.post("/api/login", user)
       .catch(err => console.log(err));
-      navigate(`/user/${data.id}`);
+      setLoading(() => false);
+      console.log(res.data);
+      navigate(`/user/${res.data.id}`);
     }
   };
 
@@ -32,6 +37,8 @@ export default function login() {
       <Navigation />
       <h1>Login</h1>
 
+      {loading?
+      <h3>Loading...</h3>:
       <form>
         <label htmlFor="email" >email </label>
         <input 
@@ -59,6 +66,7 @@ export default function login() {
 
         <button onClick={(e) => handleSubmit(e)}>submit</button>
       </form>
+      }
     </>
   )
 }
