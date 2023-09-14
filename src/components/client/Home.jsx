@@ -10,6 +10,10 @@ const Joke = styled.p`
   max-width: 80%;
   border: 2px solid black;
   padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 300px;
+  overflow-y: auto;
 `;
 
 export default function Home() {
