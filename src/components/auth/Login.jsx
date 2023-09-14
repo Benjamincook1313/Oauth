@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../client/Navigation';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function login() {
 
@@ -10,6 +11,7 @@ export default function login() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const reset = () => {
     setShow(false);
@@ -23,12 +25,12 @@ export default function login() {
       return;
     }else{
       setLoading(() => true);
-      // console.log("hit");
-      const res = await axios.post("/api/login", user)
+      const { data } = await axios.post("/api/login", user)
       .catch(err => console.log(err));
+      dispatch({type: "LOGIN", payload: data});
       setLoading(() => false);
-      console.log(res.data);
-      navigate(`/user/${res.data.id}`);
+
+      navigate(`/user/${data.id}`);
     }
   };
 

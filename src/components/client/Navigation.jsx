@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
 
 const Nav = styled.nav`
   display: flex;
@@ -26,21 +26,11 @@ const Img = styled.img`
 
 export default function Navigation() {
 
-  const [userData, setUserData] = useState({});
+  const [userData] = useState(useSelector(state => state.user));
 
-  const getUser = async () => {
-    const res = await axios.get("/api/user")
-    .catch(err => console.log(err));
-    setUserData(res.data);
-  }
-
-  useEffect(() => {
-    getUser();
-  },[]);
-  
   return (
     <Nav>
-      {userData && <Link to={`/user/${userData.id}`} >
+      {userData.id && <Link to={`/user/${userData.id}`} >
         <Img src={userData.img} alt="profile"/>
       </Link>
       }

@@ -37,10 +37,9 @@ export default function Register() {
 
     if(passwordVerified.status){
       setLoading(() => true);
-      const res = await axios.post("/api/register", {first, last, email, password})
+      const { data } = await axios.post("/api/register", {first, last, email, password})
       .catch(err => console.log(err) && setLoading(() => false));
-      // console.log(res.data);
-      alert(res.data.message);
+      alert(data.message);
       reset();
       navigate(`/login`);
     }else{

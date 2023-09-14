@@ -36,8 +36,8 @@ export default {
 
     // Compare passwords
     if(bcrypt.compareSync(password, user.password)) {
-      const { id, email, first, last } = user;
-      req.session.user = {id, email, first, last};
+      const { id, email, first, last, img } = user;
+      req.session.user = {id, email, first, last, img};
       res.status(200).send(req.session.user);
     } else res.status(401).send({message: "Incorrect password try again!"});
   },
@@ -45,5 +45,15 @@ export default {
     // console.log("hit logout");
     await req.session.destroy();
     res.send({message: "Logout successful!"});
-  }
+  },
+  updateImage: async (req, res) => {
+    const { id } = req.params;
+    const { img } = req.body;
+    await User.update({img},{where: { id }}).catch(err => {
+      res.status(400).send({err, message: "Problem updating user!"});
+    });
+
+    req.session.user.img = img;
+    res.status(200).send({userData: req.session.user, message: "Update success!"}); 
+  },
 };

@@ -1,34 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from './Navigation';
 import { capitalize } from '../../util';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function UserProfile() {
-  const { id } = useParams;
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(useSelector(state => state.user));
+  const [showAddImg, setShowAddImg] = useState(false);
   
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const getUserData = async () => {
-    const { data } = await axios.get(`/api/user`)
-    .catch((err) => console.log(err.message));
-    setUserData(data);
-  } 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { data } = await axios.patch(`/api/userImage/${userData.id}`, userData)
+    .catch(err => console.log({err, message: "Problem updating image url"}));
+    dispatch({type: "UPDATE_USER", payload: data.userData});
+    alert(data.message);
+    setShowAddImg(false);
+    navigate(`/`);
+  };
 
-  useEffect(() => {
-    getUserData();
-    // if(id < 1) navigate("/");
-  }, []);
-
-  // console.log(capitalize(userData.first));
   return (
     <>
-      <Navigation />
+      <Navigation watch={userData}/>
       <h1>User #{userData.id}</h1>
-      <p>Hello {userData.first} {userData.last}</p>
+      <p>Hello {capitalize(`${userData.first} ${userData.last}`)}</p>
       {userData.id && <h3>{userData.email}</h3>}
-      <p>Hello world</p>
+      {showAddImg?
+        <form>
+          <button type="button" onClick={() => setShowAddImg(false)}>X</button>
+          <label htmlFor="img"> ImageURL </label>
+          <input name="img" type="text" value={userData.img} onChange={(e) => setUserData({...userData, img: e.target.value})} />
+          <button onClick={(e) => handleSubmit(e)}>submit</button>
+        </form>:
+        <button onClick={() => setShowAddImg(true)}>{!userData.img? "add image": "update image"}</button>
+      }
     </>
   )
 }
